@@ -319,7 +319,8 @@ input:checked + .slider:before {
     background-color: var(--card-bg);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
-    overflow: hidden;
+    overflow: visible !important; /* IMPORTANTE: Asegurar que el contenido pueda desbordar */
+    position: relative; /* Para posicionamiento de elementos hijos */
 }
 
 .tasks-header {
@@ -355,6 +356,7 @@ input:checked + .slider:before {
     display: flex;
     flex-direction: column;
     transition: var(--transition);
+    overflow: visible !important; /* IMPORTANTE: Asegurar que el contenido pueda desbordar */
 }
 
 .task-list.grid-view {
@@ -372,7 +374,7 @@ input:checked + .slider:before {
     transition: var(--transition);
     animation: fadeIn 0.3s ease-in-out;
     position: relative;
-    overflow: visible; /* Cambiado de 'hidden' a 'visible' para permitir que el dropdown se muestre completamente */
+    overflow: visible !important; /* IMPORTANTE: Asegurar que el contenido pueda desbordar */
 }
 
 .task-list.grid-view .task-item {
@@ -505,17 +507,15 @@ input:checked + .slider:before {
     color: var(--primary-color);
 }
 
-/* Mejorar cómo se muestra el menú desplegable */
+/* SOLUCIÓN MEJORADA: Posicionamiento fijo para el menú desplegable */
 .dropdown-content {
     display: none;
-    position: absolute;
-    right: 0;
-    top: 100%;
+    position: fixed; /* Posicionamiento fijo para evitar restricciones de contenedores */
     background-color: var(--card-bg);
-    min-width: 200px;
+    width: 200px; /* Ancho fijo para consistencia */
     box-shadow: var(--shadow-lg);
     border-radius: var(--radius);
-    z-index: 1000; /* Aumentado para asegurar que esté por encima de otros elementos */
+    z-index: 1000;
     padding: var(--spacing-md);
     border: 1px solid var(--border-color);
 }
@@ -524,22 +524,6 @@ input:checked + .slider:before {
 .dropdown.active .dropdown-content {
     display: block;
     animation: fadeIn 0.2s ease-in-out;
-}
-
-/* Para la vista de cuadrícula, ajustar el posicionamiento */
-.task-list.grid-view .dropdown-content {
-    right: 0;
-    left: auto;
-}
-
-/* En dispositivos móviles, ajustar para que no se salga de la pantalla */
-@media (max-width: 768px) {
-    .dropdown-content {
-        right: 0;
-        left: auto;
-        /* Si está cerca del borde derecho, moverlo hacia la izquierda */
-        transform: translateX(-30%);
-    }
 }
 
 .dropdown-section {
@@ -754,7 +738,7 @@ input:checked + .slider:before {
 /* Task item hover effects */
 .task-item {
     position: relative;
-    overflow: visible; /* Asegurarse de que esto esté configurado como 'visible' */
+    overflow: visible !important; /* IMPORTANTE: Asegurar que el contenido pueda desbordar */
 }
 
 .task-item::after {
