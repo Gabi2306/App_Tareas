@@ -319,7 +319,8 @@ input:checked + .slider:before {
     background-color: var(--card-bg);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
-    overflow: hidden;
+    overflow: visible !important; /* IMPORTANTE: Asegurar que el contenido pueda desbordar */
+    position: relative; /* Para posicionamiento de elementos hijos */
 }
 
 .tasks-header {
@@ -355,6 +356,7 @@ input:checked + .slider:before {
     display: flex;
     flex-direction: column;
     transition: var(--transition);
+    overflow: visible !important; /* IMPORTANTE: Asegurar que el contenido pueda desbordar */
 }
 
 .task-list.grid-view {
@@ -372,6 +374,7 @@ input:checked + .slider:before {
     transition: var(--transition);
     animation: fadeIn 0.3s ease-in-out;
     position: relative;
+    overflow: visible !important; /* IMPORTANTE: Asegurar que el contenido pueda desbordar */
 }
 
 .task-list.grid-view .task-item {
@@ -504,20 +507,20 @@ input:checked + .slider:before {
     color: var(--primary-color);
 }
 
+/* SOLUCIÓN MEJORADA: Posicionamiento fijo para el menú desplegable */
 .dropdown-content {
     display: none;
-    position: absolute;
-    right: 0;
-    top: 100%;
+    position: fixed; /* Cambiado a fixed para que no esté limitado por contenedores */
     background-color: var(--card-bg);
-    min-width: 200px;
+    width: 200px; /* Ancho fijo para consistencia */
     box-shadow: var(--shadow-lg);
     border-radius: var(--radius);
-    z-index: 1;
+    z-index: 1000;
     padding: var(--spacing-md);
     border: 1px solid var(--border-color);
 }
 
+/* Mostrar el menú desplegable cuando se hace clic en el botón */
 .dropdown.active .dropdown-content {
     display: block;
     animation: fadeIn 0.2s ease-in-out;
@@ -735,6 +738,7 @@ input:checked + .slider:before {
 /* Task item hover effects */
 .task-item {
     position: relative;
+    overflow: visible !important; /* IMPORTANTE: Asegurar que el contenido pueda desbordar */
 }
 
 .task-item::after {

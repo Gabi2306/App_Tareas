@@ -50,21 +50,48 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Toggle current dropdown
                 dropdown.classList.toggle('active');
                 
-                // Asegurarse de que el menú desplegable sea visible
+                // Si el dropdown está activo, posicionarlo correctamente
                 if (dropdown.classList.contains('active')) {
+                    const dropdownBtn = dropdown.querySelector('.dropdown-btn');
                     const dropdownContent = dropdown.querySelector('.dropdown-content');
-                    const rect = dropdownContent.getBoundingClientRect();
                     
-                    // Verificar si el menú se sale por la derecha
-                    if (rect.right > window.innerWidth) {
-                        dropdownContent.style.right = '0';
-                        dropdownContent.style.left = 'auto';
+                    // Obtener posición del botón
+                    const btnRect = dropdownBtn.getBoundingClientRect();
+                    
+                    // Calcular dimensiones de la ventana
+                    const windowHeight = window.innerHeight;
+                    const windowWidth = window.innerWidth;
+                    
+                    // Establecer ancho del menú desplegable
+                    const menuWidth = 200; // Ancho aproximado del menú
+                    const menuHeight = 250; // Altura aproximada del menú
+                    
+                    // Calcular posición horizontal óptima
+                    let leftPos = btnRect.left;
+                    
+                    // Verificar si el menú se saldría por la derecha
+                    if (leftPos + menuWidth > windowWidth) {
+                        // Ajustar para que quede alineado al borde derecho de la ventana con un margen
+                        leftPos = windowWidth - menuWidth - 20; // 20px de margen
                     }
                     
-                    // Verificar si el menú se sale por abajo
-                    if (rect.bottom > window.innerHeight) {
-                        dropdownContent.style.bottom = '100%';
-                        dropdownContent.style.top = 'auto';
+                    // Verificar si el menú se saldría por la izquierda
+                    if (leftPos < 0) {
+                        leftPos = 10; // 10px de margen desde el borde izquierdo
+                    }
+                    
+                    // Posicionar el menú horizontalmente
+                    dropdownContent.style.left = leftPos + 'px';
+                    
+                    // Verificar si hay espacio suficiente debajo
+                    const spaceBelow = windowHeight - btnRect.bottom;
+                    
+                    if (spaceBelow < menuHeight && btnRect.top > menuHeight) {
+                        // No hay suficiente espacio abajo, mostrar arriba
+                        dropdownContent.style.top = (btnRect.top - menuHeight) + 'px';
+                    } else {
+                        // Hay suficiente espacio abajo, mostrar abajo
+                        dropdownContent.style.top = btnRect.bottom + 'px';
                     }
                 }
             }
